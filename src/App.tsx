@@ -1,24 +1,15 @@
-import { useStore } from "./counter";
+import { CreateTodo } from "./CreateTodo";
+import { Filters } from "./Filters";
+import { TodosList } from "./TodosList";
 
 function App() {
   return (
     <main>
-      <Counter />
-      <Counter />
-      <Counter />
+      <h1>Todo</h1>
+      <CreateTodo />
+      <Filters />
+      <TodosList />
     </main>
-  );
-}
-
-function Counter() {
-  const [state, dispatch] = useStore();
-
-  return (
-    <article>
-      <p>{state}</p>
-      <button onClick={() => dispatch("increment")}>+</button>
-      <button onClick={() => dispatch("decrement")}>-</button>
-    </article>
   );
 }
 
