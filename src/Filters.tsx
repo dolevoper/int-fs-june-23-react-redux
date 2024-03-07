@@ -1,9 +1,10 @@
 import { PropsWithChildren } from "react";
 import { Filter, useTodosStore } from "./todos";
+import styles from "./Filters.module.scss";
 
 export function Filters() {
   return (
-    <menu>
+    <menu className={styles.wrapper}>
       <li>
         <FilterLink filter="all">All</FilterLink>
       </li>

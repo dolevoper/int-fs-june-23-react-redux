@@ -23,3 +23,18 @@ input {
   font-family: inherit;
   line-height: inherit;
 }
+
+// ul,
+// menu {
+//   padding: 0;
+//   list-style: none;
+// }
+
+main {
+  width: min(75ch, 100% - 2rem);
+  margin-inline: auto;
+
+  >*+* {
+    margin-top: 1.5em;
+  }
+}

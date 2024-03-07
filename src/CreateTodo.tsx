@@ -1,10 +1,12 @@
 import { useTodosStore } from "./todos";
+import styles from "./CreateTodo.module.scss";
 
 export function CreateTodo() {
   const [, dispatch] = useTodosStore();
 
   return (
     <form
+      className={styles.wrapper}
       onSubmit={(e) => {
         e.preventDefault();
 
@@ -19,8 +21,10 @@ export function CreateTodo() {
       }}
     >
       <h2>Create todo</h2>
-      <label htmlFor="todo-text">Text</label>
-      <input type="text" name="text" id="todo-text" />
+      <div className={styles.formField}>
+        <label htmlFor="todo-text">Text</label>
+        <input type="text" name="text" id="todo-text" />
+      </div>
       <button type="submit">Add</button>
     </form>
   );
