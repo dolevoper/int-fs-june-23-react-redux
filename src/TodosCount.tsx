@@ -1,13 +1,12 @@
-import { useTodosStore } from "./todos";
-import { useVisibleTodos } from "./todos.selectors";
+import { useTodos, useVisibleTodos } from "./app/selectors";
 
 export function TodosCount() {
-  const [state] = useTodosStore();
+  const todos = useTodos();
   const visibleTodos = useVisibleTodos();
 
   return (
     <p>
-      Count: {visibleTodos.length} (All todos: {state.todos.length})
+      Count: {visibleTodos.length} (All todos: {todos.length})
     </p>
   );
 }

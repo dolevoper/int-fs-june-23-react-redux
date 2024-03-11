@@ -1,13 +1,14 @@
 import { PropsWithChildren } from "react";
-import { useTodosStore } from "./todos";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "./app/store";
+import { Filter, changeFilter } from "./app/filterSlice";
 import styles from "./Filters.module.scss";
-import { Filter, changeFilter } from "./filterReducer";
 
 export function Filters() {
   return (
     <menu className={styles.wrapper}>
       <li>
-        <FilterLink filter="all">All</FilterLink>
+        <FilterLink>All</FilterLink>
       </li>
       <li>
         <FilterLink filter="pending">Pending</FilterLink>
@@ -20,13 +21,17 @@ export function Filters() {
 }
 
 type FilterLinkProps = {
-  filter: Filter;
+  filter?: Filter;
 };
 
-function FilterLink({ filter, children }: PropsWithChildren<FilterLinkProps>) {
-  const [state, dispatch] = useTodosStore();
+function FilterLink({
+  filter = null,
+  children,
+}: PropsWithChildren<FilterLinkProps>) {
+  const dispatch = useDispatch();
+  const activeFilter = useSelector((state: RootState) => state.filter);
 
-  if (state.filter === filter) {
+  if (activeFilter === filter) {
     return children;
   }
 
@@ -35,10 +40,7 @@ function FilterLink({ filter, children }: PropsWithChildren<FilterLinkProps>) {
       href=""
       onClick={(e) => {
         e.preventDefault();
-        dispatch({
-          type: "filter",
-          action: changeFilter(filter),
-        });
+        dispatch(changeFilter(filter));
       }}
     >
       {children}
