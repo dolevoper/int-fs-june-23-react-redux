@@ -4,14 +4,9 @@ import {
   useContext,
   useReducer,
 } from "react";
-
-export type Todo = {
-  id: string;
-  text: string;
-  state: "pending" | "completed";
-};
-
-export type Filter = "all" | Todo["state"];
+import { TodoAction } from "./todos.actions";
+import { Filter, FilterAction, filter } from "./filterReducer";
+import { Todo, todos } from "./todos.reducer";
 
 type State = {
   todos: Todo[];
@@ -19,46 +14,20 @@ type State = {
 };
 
 type Action =
-  | { type: "create todo"; text: string }
-  | { type: "toggle todo"; id: string }
-  | { type: "delete todo"; id: string }
-  | { type: "change filter"; filter: Filter };
+  | { type: "todo"; action: TodoAction }
+  | { type: "filter"; action: FilterAction };
 
-function todos(state: State, action: Action): State {
+function reducer(state: State, action: Action): State {
   switch (action.type) {
-    case "create todo":
+    case "todo":
       return {
         ...state,
-        todos: [
-          ...state.todos,
-          {
-            id: crypto.randomUUID(),
-            text: action.text,
-            state: "pending",
-          },
-        ],
+        todos: todos(state.todos, action.action),
       };
-    case "toggle todo":
+    case "filter":
       return {
         ...state,
-        todos: state.todos.map((todo) =>
-          todo.id !== action.id
-            ? todo
-            : {
-                ...todo,
-                state: todo.state === "completed" ? "pending" : "completed",
-              }
-        ),
-      };
-    case "delete todo":
-      return {
-        ...state,
-        todos: state.todos.filter((todo) => todo.id !== action.id),
-      };
-    case "change filter":
-      return {
-        ...state,
-        filter: action.filter,
+        filter: filter(state.filter, action.action),
       };
   }
 }
@@ -68,7 +37,7 @@ const initialState: State = {
   filter: "all",
 };
 
-const useTodos = () => useReducer(todos, initialState);
+const useTodos = () => useReducer(reducer, initialState);
 
 const todosContext = createContext<ReturnType<typeof useTodos> | undefined>(
   undefined

@@ -1,5 +1,6 @@
 import { CreateTodo } from "./CreateTodo";
 import { Filters } from "./Filters";
+import { TodosCount } from "./TodosCount";
 import { TodosList } from "./TodosList";
 
 function App() {
@@ -9,6 +10,7 @@ function App() {
       <CreateTodo />
       <Filters />
       <TodosList />
+      <TodosCount />
     </main>
   );
 }

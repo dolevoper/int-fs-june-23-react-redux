@@ -1,11 +1,11 @@
-import { Todo, useTodosStore } from "./todos";
+import { useTodosStore } from "./todos";
+import { toggleTodo } from "./todos.actions";
+import { Todo } from "./todos.reducer";
+import { useVisibleTodos } from "./todos.selectors";
 
 export function TodosList() {
-  const [state, dispatch] = useTodosStore();
-  const visibleTodos =
-    state.filter === "all"
-      ? state.todos
-      : state.todos.filter((todo) => todo.state === state.filter);
+  const [, dispatch] = useTodosStore();
+  const visibleTodos = useVisibleTodos();
 
   return (
     <ul>
@@ -15,8 +15,8 @@ export function TodosList() {
           todo={todo}
           onClick={() =>
             dispatch({
-              type: "toggle todo",
-              id: todo.id,
+              type: "todo",
+              action: toggleTodo(todo.id),
             })
           }
         />

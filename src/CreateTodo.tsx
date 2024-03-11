@@ -1,5 +1,6 @@
 import { useTodosStore } from "./todos";
 import styles from "./CreateTodo.module.scss";
+import { createTodo } from "./todos.actions";
 
 export function CreateTodo() {
   const [, dispatch] = useTodosStore();
@@ -13,8 +14,8 @@ export function CreateTodo() {
         const formData = new FormData(e.currentTarget);
 
         dispatch({
-          type: "create todo",
-          text: formData.get("text")!.toString(),
+          type: "todo",
+          action: createTodo(formData.get("text")!.toString()),
         });
 
         e.currentTarget.reset();

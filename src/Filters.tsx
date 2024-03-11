@@ -1,6 +1,7 @@
 import { PropsWithChildren } from "react";
-import { Filter, useTodosStore } from "./todos";
+import { useTodosStore } from "./todos";
 import styles from "./Filters.module.scss";
+import { Filter, changeFilter } from "./filterReducer";
 
 export function Filters() {
   return (
@@ -35,8 +36,8 @@ function FilterLink({ filter, children }: PropsWithChildren<FilterLinkProps>) {
       onClick={(e) => {
         e.preventDefault();
         dispatch({
-          type: "change filter",
-          filter,
+          type: "filter",
+          action: changeFilter(filter),
         });
       }}
     >

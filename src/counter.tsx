@@ -6,7 +6,7 @@ import {
 } from "react";
 
 type State = number;
-type Action = "increment" | "decrement";
+type Action = "increment" | "decrement" | "double";
 
 function counter(state: State, action: Action) {
   switch (action) {
@@ -14,6 +14,8 @@ function counter(state: State, action: Action) {
       return state + 1;
     case "decrement":
       return state - 1;
+    case "double":
+      return state * 2;
   }
 }
 
