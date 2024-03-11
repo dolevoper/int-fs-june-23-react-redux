@@ -1,24 +1,18 @@
-import { useTodosStore } from "./todos";
-import { toggleTodo } from "./todos.actions";
-import { Todo } from "./todos.reducer";
-import { useVisibleTodos } from "./todos.selectors";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "./app/store";
+import { Todo, toggleTodo } from "./app/todosSlice";
 
 export function TodosList() {
-  const [, dispatch] = useTodosStore();
-  const visibleTodos = useVisibleTodos();
+  const dispatch = useDispatch();
+  const todos = useSelector((state: RootState) => state.todos);
 
   return (
     <ul>
-      {visibleTodos.map((todo) => (
+      {todos.map((todo) => (
         <TodoListItem
           key={todo.id}
           todo={todo}
-          onClick={() =>
-            dispatch({
-              type: "todo",
-              action: toggleTodo(todo.id),
-            })
-          }
+          onClick={() => dispatch(toggleTodo(todo.id))}
         />
       ))}
     </ul>

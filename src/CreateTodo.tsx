@@ -1,9 +1,9 @@
-import { useTodosStore } from "./todos";
+import { useDispatch } from "react-redux";
+import { addTodo } from "./app/todosSlice";
 import styles from "./CreateTodo.module.scss";
-import { createTodo } from "./todos.actions";
 
 export function CreateTodo() {
-  const [, dispatch] = useTodosStore();
+  const dispatch = useDispatch();
 
   return (
     <form
@@ -13,10 +13,7 @@ export function CreateTodo() {
 
         const formData = new FormData(e.currentTarget);
 
-        dispatch({
-          type: "todo",
-          action: createTodo(formData.get("text")!.toString()),
-        });
+        dispatch(addTodo(formData.get("text")!.toString()));
 
         e.currentTarget.reset();
       }}
